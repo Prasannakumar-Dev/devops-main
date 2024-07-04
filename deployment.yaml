@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: reddit-clone-deployment
+  name: my-node-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: reddit-clone-app
+      app: my-node-app
   template:
     metadata:
       labels:
-        app: reddit-clone-app
+        app: my-node-app
     spec:
       containers:
-        - name: reddit-clone-app
-          image: ashfaque9x/reddit-clone-pipeline:1.0.0-11
+        - name: my-node-app
+          image: prasannakumar520/my-node-app:7
           resources:
             limits:
               cpu: "1"
