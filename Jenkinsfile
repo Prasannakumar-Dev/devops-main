@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-          APP_NAME = "reddit-clone-pipeline"
+          APP_NAME = "my-node-app"
     }
     stages {
          stage("Cleanup Workspace") {
@@ -11,7 +11,7 @@ pipeline {
          }
          stage("Checkout from SCM") {
              steps {
-                     git branch: 'main', credentialsId: 'github', url: 'https://github.com/Ashfaque-9x/a-reddit-clone-gitops'
+                     git branch: 'main', credentialsId: 'github', url: 'https://github.com/Prasannakumar-Dev/devops-main'
              }
          }
          stage("Update the Deployment Tags") {
