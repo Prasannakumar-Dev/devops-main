@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     def image = sh(
-                        script: "curl -s https://hub.docker.com/v2/repositories/${DOCKER_REPO}/tags/latest | jq -r .name",
+                        script: "curl -s https://hub.docker.com/v2/repositories/${DOCKER_REPO}/tags/latest | grep '\"name\"' | cut -d '\"' -f 4",
                         returnStdout: true
                     ).trim()
                     env.IMAGE_TAG = image
