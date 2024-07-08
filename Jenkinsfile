@@ -4,6 +4,9 @@ pipeline {
         APP_NAME = "my-node-app"
         DOCKER_REPO = "prasannakumar520/my-node-app"
     }
+    parameters {
+        string(name: 'IMAGE_TAG', defaultValue: '', description: 'Tag of the Docker image to deploy')
+    }
     stages {
         stage("Cleanup Workspace") {
             steps {
@@ -13,17 +16,6 @@ pipeline {
         stage("Checkout from SCM") {
             steps {
                 git branch: 'main', credentialsId: 'github', url: 'https://github.com/Prasannakumar-Dev/devops-main'
-            }
-        }
-        stage("Get Latest Image Tag") {
-            steps {
-                script {
-                    def image = sh(
-                        script: "curl -s https://hub.docker.com/v2/repositories/${DOCKER_REPO}/tags/latest | grep '\"name\"' | cut -d '\"' -f 4",
-                        returnStdout: true
-                    ).trim()
-                    env.IMAGE_TAG = image
-                }
             }
         }
         stage("Update the Deployment Tags") {
@@ -47,8 +39,8 @@ pipeline {
                     git add deployment.yaml
                     git commit -m "Updated Deployment Manifest with latest image tag"
                 """
-                withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
-                    sh "git push https://github.com/Prasannakumar-Dev/devops-main main"
+                withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Prasannakumar-Dev/devops-main main"
                 }
             }
         }
