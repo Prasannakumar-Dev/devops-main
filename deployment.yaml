@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: my-node-app
-          image: prasannakumar520/my-node-app:1.0.0-22
+          image: prasannakumar520/my-node-app:1.0.0-23
           resources:
             limits:
               cpu: "1"
